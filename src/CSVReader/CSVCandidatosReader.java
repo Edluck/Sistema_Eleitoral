@@ -1,7 +1,9 @@
 package CSVReader;
 
+import java.io.FileNotFoundException;
+
 public class CSVCandidatosReader {
-    public void candidatosReader(String arquivo_cand) {
+    public static void candidatosReader(String arquivo_cand) throws FileNotFoundException {
         
     }
 }
