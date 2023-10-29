@@ -8,6 +8,7 @@ public abstract class Candidato {
     private Date dataNascimento;
     private Partido partido;
     private TipoCandidato tipoCandidato;
+    private Boolean participou_Federacao;
 
     public Candidato(String name) {
         this.name = name;
