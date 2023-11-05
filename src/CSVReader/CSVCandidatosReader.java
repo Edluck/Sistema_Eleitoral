@@ -3,6 +3,7 @@ package CSVReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ public class CSVCandidatosReader {
 
     private static String diretorio_arq_cand = "src/CSVReader/";
 
-    public static void candidatosReader(String arquivo_cand, String tipo_deputado)
+    public static void candidatosReader(String arquivo_cand, String tipo_deputado, Map<Integer, Candidato> candidatos)
             throws FileNotFoundException {
         try (FileInputStream file = new FileInputStream(diretorio_arq_cand + arquivo_cand)) {
             Scanner s = new Scanner(file, "ISO-8859-1");
@@ -36,6 +37,15 @@ public class CSVCandidatosReader {
                             if (dados[56].equals("2") || dados[56].equals("3"))
                                 n_vagas++;
 
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+                            LocalDate dt1 = LocalDate.parse(dados[42], formatter);
+
+                            Candidato c = new Candidato(Integer.parseInt(dados[13]), Integer.parseInt(dados[68]),
+                                    Integer.parseInt(dados[16]), dados[18], Integer.parseInt(dados[27]), dados[28],
+                                    Integer.parseInt(dados[30]), dt1,
+                                    Integer.parseInt(dados[56]), Integer.parseInt(dados[45]), dados[67]);
+
+                            candidatos.put(Integer.parseInt(dados[16]), c);
                         }
                     }
                     // Para estadual
@@ -55,11 +65,12 @@ public class CSVCandidatosReader {
                 }
             }
             System.out.println("Numero de vagas: " + n_vagas);
-
+            s.close();
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo nao encontrado");
         } catch (Exception e) {
             System.out.println("Erro ao ler arquivo");
+            e.printStackTrace();
         }
     }
 }

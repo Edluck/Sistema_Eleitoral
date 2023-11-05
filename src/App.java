@@ -12,10 +12,8 @@ public class App {
         //retirando os tracos do argumento de deputados
         args[0] = args[0].replace("-","");
         Map<Integer, Candidato> candidatos = new HashMap<Integer, Candidato>();
-        CSVCandidatosReader.candidatosReader(args[1],args[0]);
+        CSVCandidatosReader.candidatosReader(args[1],args[0], candidatos);
         CSVVotacaoReader.votacaoReader(args[2]);
-
-
         
 }
 }

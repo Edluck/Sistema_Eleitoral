@@ -6,7 +6,7 @@ import java.util.Map;
 public class Partido {
 
     private String name;
-    private Map<String, Candidato> candidatos = new HashMap<String, Candidato>();
+    private Map<Integer, Candidato> candidatos = new HashMap<Integer, Candidato>();
     
     
 

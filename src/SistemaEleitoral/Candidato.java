@@ -3,6 +3,7 @@ package SistemaEleitoral;
 import java.time.LocalDate;
 
 public class Candidato {
+    
     private int cd_cargo;
     private int cd_situacao_candidato_tot;
     private int nr_candidato;
