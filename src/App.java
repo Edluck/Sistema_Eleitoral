@@ -8,6 +8,11 @@ import SistemaEleitoral.Candidato;
 
 
 public class App {
+    private static void printRelatorioIdade(Map<Integer, Candidato> candidatos, int n_vagas){
+
+        
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         //retirando os tracos do argumento de deputados
         args[0] = args[0].replace("-","");
@@ -20,8 +25,10 @@ public class App {
             if(candidato.getCd_sit_tot_turno() == 2 || candidato.getCd_sit_tot_turno() == 3)
             {  
                 System.out.println(i + " - " + candidato);
-            i++;}
+                i++;
+            }
         }
         
+        //printRelatorioIdade(candidatos, i);
 }
 }

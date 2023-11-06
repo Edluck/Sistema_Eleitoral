@@ -70,6 +70,9 @@ public class Candidato {
      public void setIdade(LocalDate data_eleicao) {
          this.idade = data_eleicao.getYear() - this.dt_nascimento.getYear();
      }
+     public int getIdade() {
+        return this.idade;
+     }
 
      public void addVoto() {
          this.qtd_votos++;
