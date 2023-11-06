@@ -14,11 +14,20 @@ public class CSVCandidatosReader {
 
     private static String diretorio_arq_cand = "src/CSVReader/";
 
-    public static void candidatosReader(String arquivo_cand, String tipo_deputado, Map<Integer, Candidato> candidatos)
+    public static void candidatosReader( String tipo_deputado,String arquivo_cand,String data_eleicao, Map<Integer, Candidato> candidatos)
             throws FileNotFoundException {
+
         try (FileInputStream file = new FileInputStream(diretorio_arq_cand + arquivo_cand)) {
             Scanner s = new Scanner(file, "ISO-8859-1");
             int n_vagas = 0;
+            String tipo_cand;
+            if(tipo_deputado.equals("federal")) 
+                 tipo_cand = "6";
+            else
+                 tipo_cand = "7";
+
+
+
             while (s.hasNextLine()) {
                 String dados[] = s.nextLine().split(";");
                 // Apenas candidatos deferidos
@@ -27,9 +36,7 @@ public class CSVCandidatosReader {
                 }
 
                 if (dados[68].equals("2") || dados[68].equals("16")) {
-                    // Para federal
-                    if (tipo_deputado.equals("federal")) {
-                        if (dados[13].equals("6")) {
+                        if (dados[13].equals(tipo_cand)) {
                             // adiciona asterisco ao nome do candidato indicando possuir federacao
                             if (!(dados[30].equals("-1")))
                                 dados[18] = "*" + dados[18];
@@ -39,32 +46,17 @@ public class CSVCandidatosReader {
 
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
                             LocalDate dt1 = LocalDate.parse(dados[42], formatter);
-
+                            LocalDate dt_eleicao = LocalDate.parse(data_eleicao, formatter);
                             Candidato c = new Candidato(Integer.parseInt(dados[13]), Integer.parseInt(dados[68]),
                                     Integer.parseInt(dados[16]), dados[18], Integer.parseInt(dados[27]), dados[28],
                                     Integer.parseInt(dados[30]), dt1,
                                     Integer.parseInt(dados[56]), Integer.parseInt(dados[45]), dados[67]);
-
+                            c.setIdade(dt_eleicao);
                             candidatos.put(Integer.parseInt(dados[16]), c);
-                        }
-                    }
-                    // Para estadual
-                    else if (tipo_deputado.equals("estadual")) {
-                        if (dados[13].equals("7")) {
-
-                            // adiciona asterisco ao nome do candidato indicando possuir federacao
-                            if (!(dados[30].equals("-1")))
-                                dados[18] = "*" + dados[18];
-                            // contabilizar vagas para deputador estadual
-                            if (dados[56].equals("2") || dados[56].equals("3"))
-                                n_vagas++;
-
-                        }
-
-                    }
+                        }    
                 }
             }
-            System.out.println("Numero de vagas: " + n_vagas);
+            System.out.println("Numero de vagas: " + n_vagas + "\n");
             s.close();
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo nao encontrado");
