@@ -48,7 +48,97 @@ public class GeraRelatorios {
             System.out.println("Deputados federais eleitos: ");
         else if (nr_tipo_cand == 7)
             System.out.println("Deputados estaduais eleitos: ");
-        
+
+        List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
+        Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
+        order.sort(comparator);
+
+        Iterator<Candidato> it = order.iterator();
+
+        while (it.hasNext() == true) {
+            Candidato c = it.next();
+            if (c.getCd_cargo() == nr_tipo_cand &&
+                    (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) {
+                    System.out.println(i + " - " + c);
+                    i++;
+                }
+            }
+        }
+    }
+
+    public static void geraRelatorio2(int nr_tipo_cand, Map<Integer, Candidato> candidatos,Map<Integer, Partido> partidos) {
+        int nr_vagas = 0, i = 1;
+        for (Candidato c : candidatos.values()) {
+            if (c.getCd_cargo() == nr_tipo_cand
+                    && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)
+                    nr_vagas++;
+            }
+        }
+        System.out.println("\nCandidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):");
+        List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
+        Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
+        order.sort(comparator);
+
+        Iterator<Candidato> it = order.iterator();
+
+        while (it.hasNext() == true && nr_vagas >= i) {
+            Candidato c = it.next();
+            if (c.getCd_cargo() == nr_tipo_cand && 
+            (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
+            {
+
+                System.out.println(i + " - " + c);
+                i++;
+
+            }
+        }
+
+    }
+
+    public static void geraRelatorio3(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
+            Map<Integer, Partido> partidos) {
+               int nr_vagas = 0, i = 1;
+        for (Candidato c : candidatos.values()) {
+            if (c.getCd_cargo() == nr_tipo_cand
+                    && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)
+                    nr_vagas++;
+            }
+        }
+        System.out.println("\nTeriam sido eleitos se a votação fosse majoritária, e não foram eleitos:\n(com sua posição no ranking de mais votados)");
+        List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
+        Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
+        order.sort(comparator);
+
+        Iterator<Candidato> it = order.iterator();
+
+        while (it.hasNext() == true && nr_vagas >= i) {
+            Candidato c = it.next();
+            if (c.getCd_cargo() == nr_tipo_cand && 
+            (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
+            {
+                if(!(c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3))
+                System.out.println(i + " - " + c);
+                i++;
+
+            }
+        } 
+    }
+
+    public static void geraRelatorio4(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
+            Map<Integer, Partido> partidos) {
+
+                int nr_vagas = 0, i = 1;
+        for (Candidato c : candidatos.values()) {
+            if (c.getCd_cargo() == nr_tipo_cand
+                    && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)
+                    nr_vagas++;
+            }
+        }
+        System.out.println("\nEleitos, que se beneficiaram do sistema proporcional:\n(com sua posição no ranking de mais votados)");
         List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
         Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
         order.sort(comparator);
@@ -60,40 +150,12 @@ public class GeraRelatorios {
             if (c.getCd_cargo() == nr_tipo_cand && 
             (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
             {
-                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) {
-                    System.out.println(i + " - " + c);
-                    i++;
-                }
+                if((c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) && i > nr_vagas)
+                System.out.println(i + " - " + c);
+                i++;
+
             }
-        }
-        
-        /*
-        for (Candidato c : candidatos.values() ) {
-            if (c.getCd_cargo() == nr_tipo_cand && 
-            (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
-            {
-                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) {
-                    System.out.println(i + " - " + c);
-                    i++;
-                }
-            }
-        }
-         */
-    }
-
-    public static void geraRelatorio2(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
-            Map<Integer, Partido> partidos) {
-
-    }
-
-    public static void geraRelatorio3(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
-            Map<Integer, Partido> partidos) {
-
-    }
-
-    public static void geraRelatorio4(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
-            Map<Integer, Partido> partidos) {
-
+        } 
     }
 
     public static void geraRelatorio5(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
@@ -138,7 +200,7 @@ public class GeraRelatorios {
                     idade_maior_60++;
             }
         }
-        DecimalFormat format = new DecimalFormat("#,###.00");
+        DecimalFormat format = new DecimalFormat("#,##0.00");
         DecimalFormat format2 = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
@@ -231,8 +293,8 @@ public class GeraRelatorios {
 
         System.out.println("\nTotal de votos válidos:    " + format2.format(total_votos_validos));
         System.out.println("Total de votos nominais:   " + format2.format(total_votos_nomimais) + " ("
-                        + format.format(percentual_votos_nomimais) + "%)");
+                + format.format(percentual_votos_nomimais) + "%)");
         System.out.println("Total de votos de legenda: " + format2.format(total_votos_legenda) + " ("
-                        + format.format(percentual_votos_legenda) + "%)");
+                + format.format(percentual_votos_legenda) + "%)");
     }
 }

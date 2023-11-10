@@ -18,7 +18,6 @@ public class CSVVotacaoReader {
         try (FileInputStream file = new FileInputStream(diretorio_arq_vot + arquivo_vot)) {
             Scanner s = new Scanner(file, "ISO-8859-1");
             s.nextLine();
-            int i1 = 0;
             while (s.hasNextLine()) {
                 String dados[] = s.nextLine().split(";");
                 for (int i = 0; i < dados.length; i++) {
@@ -41,7 +40,7 @@ public class CSVVotacaoReader {
                                 int nr_partido = candidatos.get(nr_notavel).getNr_partido();
                                 partidos.get(nr_partido).addVotosLegenda(qt_votos);
                             } else {
-                                
+
                                 candidatos.get(nr_notavel).addVotos(qt_votos);
                             }
                         } else if (partidos.containsKey(nr_notavel)) {
@@ -51,7 +50,7 @@ public class CSVVotacaoReader {
                     
                 }
             }
-            System.out.println("Quantidade total: " + i1);
+   
             s.close();
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado");
