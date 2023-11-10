@@ -3,40 +3,39 @@ package SistemaEleitoral;
 import java.util.Map;
 
 public class GeraRelatorios {
-    private String tipo_deputado;
 
-    public GeraRelatorios(String tipo_deputado) {
-        this.tipo_deputado = tipo_deputado;
+    public static void geraRelatorioTodos(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+
     }
 
-    public void relatorio1(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio1(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio2(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio2(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio3(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio3(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio4(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio4(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio5(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio5(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio6(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio6(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio7(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio7(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio8(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio8(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio9(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio9(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public void relatorio10(Map<Integer, Candidato> candidatos) {
+    public static void geraRelatorio10(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
 }

@@ -13,7 +13,7 @@ public class CSVCandidatosReader {
 
     private static String diretorio_arq_cand = "src/CSVReader/";
 
-    public static void candidatosReader(String tipo_deputado, String arquivo_cand, String data_eleicao,
+    public static void candidatosReader(String arquivo_cand, String data_eleicao,
             Map<Integer, Candidato> candidatos)
             throws FileNotFoundException {
 

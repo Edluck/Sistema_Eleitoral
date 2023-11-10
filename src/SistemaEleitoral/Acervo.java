@@ -10,9 +10,9 @@ public class Acervo {
     private Map<Integer, Candidato> candidatos = new HashMap<Integer, Candidato>();
     private Map<Integer, Partido> partidos = new HashMap<Integer, Partido>();
     
-    public Acervo(String tipo_deputado, String arq_cand, String arq_vot, String data_eleicao) {
+    public Acervo(String arq_cand, String arq_vot, String data_eleicao) {
         try {
-            CSVCandidatosReader.candidatosReader(tipo_deputado, arq_cand, data_eleicao, candidatos);
+            CSVCandidatosReader.candidatosReader(arq_cand, data_eleicao, candidatos);
             cria_partidos(candidatos);
             CSVVotacaoReader.votacaoReader(arq_vot, candidatos, partidos);
             imprime_partidos();
@@ -39,6 +39,10 @@ public class Acervo {
         for(Partido p : partidos.values()) {
             System.out.println(p);
         }
+    }
+
+    public void geraRelatorio(String tipo_deputado) {
+        GeraRelatorios.geraRelatorioTodos(tipo_deputado, candidatos, partidos);
     }
 
 }
