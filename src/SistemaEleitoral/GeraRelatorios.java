@@ -12,7 +12,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 public class GeraRelatorios {
-
+    
     public static void geraRelatorioTodos(String tipo_deputado, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
         int nr_tipo_cand = 0;
@@ -35,7 +35,7 @@ public class GeraRelatorios {
 
     public static void geraRelatorio1(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
-        int nr_vagas = 0, i = 1;
+                int nr_vagas = 0;
         for (Candidato c : candidatos.values()) {
             if (c.getCd_cargo() == nr_tipo_cand
                     && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
@@ -44,6 +44,18 @@ public class GeraRelatorios {
             }
         }
         System.out.println("Número de vagas: " + nr_vagas + "\n");
+    }
+
+    public static void geraRelatorio2(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
+            Map<Integer, Partido> partidos) {
+        int nr_vagas = 0, i = 1;
+        for (Candidato c : candidatos.values()) {
+            if (c.getCd_cargo() == nr_tipo_cand
+                    && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)
+                    nr_vagas++;
+            }
+        }
         if (nr_tipo_cand == 6)
             System.out.println("Deputados federais eleitos: ");
         else if (nr_tipo_cand == 7)
@@ -67,7 +79,7 @@ public class GeraRelatorios {
         }
     }
 
-    public static void geraRelatorio2(int nr_tipo_cand, Map<Integer, Candidato> candidatos,Map<Integer, Partido> partidos) {
+    public static void geraRelatorio3(int nr_tipo_cand, Map<Integer, Candidato> candidatos,Map<Integer, Partido> partidos) {
         int nr_vagas = 0, i = 1;
         for (Candidato c : candidatos.values()) {
             if (c.getCd_cargo() == nr_tipo_cand
@@ -97,7 +109,7 @@ public class GeraRelatorios {
 
     }
 
-    public static void geraRelatorio3(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
+    public static void geraRelatorio4(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
                int nr_vagas = 0, i = 1;
         for (Candidato c : candidatos.values()) {
@@ -127,7 +139,7 @@ public class GeraRelatorios {
         } 
     }
 
-    public static void geraRelatorio4(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
+    public static void geraRelatorio5(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
 
                 int nr_vagas = 0, i = 1;
@@ -158,14 +170,29 @@ public class GeraRelatorios {
         } 
     }
 
-    public static void geraRelatorio5(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
-            Map<Integer, Partido> partidos) {
-
-    }
-
     public static void geraRelatorio6(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
+                
+            System.out.println("\nVotação dos partidos e número de candidatos eleitos:");
+                // 12 - PSC - 20, 73.749 votos (71.098 nominais e 2.651 de legenda), 1 candidato eleito
+        List<Partido> order = new ArrayList<Partido>(partidos.values());
+        Comparator<Partido> comparator = (p1, p2) -> p2.getVotosTotais() - p1.getVotosTotais();
+        order.sort(comparator);
+        int i = 1;
+        Iterator<Partido> it = order.iterator();
+        while (it.hasNext() == true) {
+            Partido p = it.next();
+            int qtd_eleitos_partido = 0;
+            for(Candidato c : p.getCandidatos().values()) {
+                if(c.getCd_cargo() == nr_tipo_cand && (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)) {
+                    qtd_eleitos_partido++;
+                }
+                
+            }
+            System.out.println(i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nominais e " + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido + " candidatos eleitos");
 
+            i++;
+        } 
     }
 
     public static void geraRelatorio7(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
