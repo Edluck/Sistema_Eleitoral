@@ -74,13 +74,17 @@ public class GeraRelatorios {
         order.sort(comparator);
 
         Iterator<Candidato> it = order.iterator();
-
+        
         while (it.hasNext() == true) {
             Candidato c = it.next();
+            String eh_fed = "";
+            if (c.getNr_federacao() != -1) {
+                eh_fed = "*";
+            }
             if (c.getCd_cargo() == nr_tipo_cand &&
                     (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
                 if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) {
-                    System.out.println(i + " - " + c);
+                    System.out.println(i + " - " + eh_fed + c);
                     i++;
                 }
             }
@@ -114,10 +118,14 @@ public class GeraRelatorios {
 
         while (it.hasNext() == true && nr_vagas >= i) {
             Candidato c = it.next();
+            String eh_fed = "";
+            if (c.getNr_federacao() != -1) {
+                eh_fed = "*";
+            }
             if (c.getCd_cargo() == nr_tipo_cand &&
                     (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
 
-                System.out.println(i + " - " + c);
+                System.out.println(i + " - " + eh_fed + c);
                 i++;
 
             }
@@ -152,10 +160,14 @@ public class GeraRelatorios {
 
         while (it.hasNext() == true && nr_vagas >= i) {
             Candidato c = it.next();
+            String eh_fed = "";
+            if (c.getNr_federacao() != -1) {
+                eh_fed = "*";
+            }
             if (c.getCd_cargo() == nr_tipo_cand &&
                     (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
                 if (!(c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3))
-                    System.out.println(i + " - " + c);
+                    System.out.println(i + " - " + eh_fed+ c);
                 i++;
 
             }
@@ -190,10 +202,14 @@ public class GeraRelatorios {
 
         while (it.hasNext() == true) {
             Candidato c = it.next();
+            String eh_fed = "";
+            if (c.getNr_federacao() != -1) {
+                eh_fed = "*";
+            }
             if (c.getCd_cargo() == nr_tipo_cand &&
                     (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
                 if ((c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) && i > nr_vagas)
-                    System.out.println(i + " - " + c);
+                    System.out.println(i + " - " + eh_fed+c);
                 i++;
 
             }
@@ -247,7 +263,82 @@ public class GeraRelatorios {
             Map<Integer, Partido> partidos) {
         System.out.println("\nPrimeiro e último colocados de cada partido:");
   
+        Comparator<Candidato> comparator_c = (c1, c2) -> {
+            int res_c = 0;
+            res_c = c2.getQtd_votos() - c1.getQtd_votos();
+            if (res_c == 0) {
+                res_c = c2.getIdade() - c1.getIdade();
+            }
+            return res_c;
+        };
+
+        Comparator<Partido> comparator_p = (p1, p2) -> {
+            int res_p = 0;
+            if (p1.getCandidatos().size() == 0 && p2.getCandidatos().size() == 0) {
+                return 0;
+            }
+            else if (p1.getCandidatos().size() == 0) {
+                return 1;
+            }
+            else if (p2.getCandidatos().size() == 0) {
+                return -1;
+            }
+            
+            List<Candidato> lista_c1 = new ArrayList<Candidato>(p1.getCandidatos().values());
+            List<Candidato> lista_c2 = new ArrayList<Candidato>(p2.getCandidatos().values());
+
+            lista_c1.sort(comparator_c);
+            lista_c2.sort(comparator_c);
+
+            res_p = lista_c2.get(0).getQtd_votos() - lista_c1.get(0).getQtd_votos();
+            
+            if (res_p == 0) {
+                res_p = p1.getNr_partido() - p2.getNr_partido();
+            }
+
+            return res_p;
+        };
+
+        List<Partido> order_p = new ArrayList<Partido>(partidos.values());
         
+        order_p.sort(comparator_p);
+
+        int i = 1;
+        Iterator<Partido> it_p = order_p.iterator();
+        while (it_p.hasNext() == true) {
+            int redutor_idx = 1;
+
+            Partido p = it_p.next();
+            
+            if (p.getCandidatos().size() == 0) {
+                continue;
+            }
+            
+            List<Candidato> order_c = new ArrayList<Candidato>(p.getCandidatos().values());
+
+            order_c.sort(comparator_c);
+            
+            Candidato c_melhor = order_c.get(0);
+            
+            if (c_melhor.getQtd_votos() <= 0) {
+                continue;
+            }
+
+            Candidato c_pior = order_c.get(p.getCandidatos().size() - redutor_idx);
+            
+            while (c_pior.getQtd_votos() == 0) {
+                redutor_idx++;
+                c_pior = order_c.get(p.getCandidatos().size() - redutor_idx);
+            }
+
+            System.out.println(i + " - " + p + " " + c_melhor.getNm_urna_candidato() + " (" + c_melhor.getNr_candidato()
+                    + ", " + c_melhor.getQtd_votos()
+                    + ")" + " / " + c_pior.getNm_urna_candidato() + " (" + c_pior.getNr_candidato() + ", "
+                    + c_pior.getQtd_votos() + ")");
+            i++;
+        }
+
+       
 
     }
 

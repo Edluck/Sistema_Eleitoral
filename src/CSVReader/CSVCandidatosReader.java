@@ -35,9 +35,6 @@ public class CSVCandidatosReader {
 
                 if (dados[13].equals("6") || dados[13].equals("7")) {
 
-                    if (!(dados[30].equals("-1")))
-                        dados[18] = "*" + dados[18];
-
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
                     LocalDate dt1 = LocalDate.parse(dados[42], formatter);
                     LocalDate dt_eleicao = LocalDate.parse(data_eleicao, formatter);

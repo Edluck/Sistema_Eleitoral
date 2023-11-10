@@ -42,7 +42,9 @@ public class CSVVotacaoReader {
                                 int nr_partido = candidatos.get(nr_notavel).getNr_partido();
                                 partidos.get(nr_partido).addVotosLegenda(qt_votos);
                             } else {
-                                candidatos.get(nr_notavel).addVotos(qt_votos);
+                                if (candidatos.get(nr_notavel).getCd_situacao_candidato_tot() == 2 || candidatos.get(nr_notavel).getCd_situacao_candidato_tot() == 16 ) {
+                                    candidatos.get(nr_notavel).addVotos(qt_votos);   
+                                }
                             }
                         } else if (partidos.containsKey(nr_notavel)) {
                             partidos.get(nr_notavel).addVotosLegenda(qt_votos);

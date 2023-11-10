@@ -23,6 +23,13 @@ public class Acervo {
 
     public void geraRelatorio(String tipo_deputado) {
         GeraRelatorios.geraRelatorioTodos(tipo_deputado, candidatos, partidos);
+
+        for (Partido p : partidos.values()) {
+            //System.out.println("\n\n" + p.getSg_partido() + ":");
+            for (Candidato c : p.getCandidatos().values()) {
+               //System.out.println(c);
+            }
+        }
     }
 
 }
