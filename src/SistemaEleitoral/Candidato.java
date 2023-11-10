@@ -90,6 +90,12 @@ public class Candidato {
         symbols.setGroupingSeparator('.');
         format.setDecimalFormatSymbols(symbols);
 
-        return this.nm_urna_candidato + " (" + this.sg_partido + ", " + format.format(this.qtd_votos) + " votos)";
+        String plural_votos = ""; 
+
+        if (this.qtd_votos > 1) {
+            plural_votos = "s";
+        }
+        
+        return this.nm_urna_candidato + " (" + this.sg_partido + ", " + format.format(this.qtd_votos) + " voto" +plural_votos +")";
     }
 }
