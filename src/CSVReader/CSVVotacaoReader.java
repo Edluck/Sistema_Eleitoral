@@ -35,12 +35,11 @@ public class CSVVotacaoReader {
                         } else {
                             candidatos.get(nr_notavel).addVotos(qt_votos);
                         }
+                    } else if (partidos.containsKey(nr_notavel)) {
+                        partidos.get(nr_notavel).addVotosLegenda(qt_votos);
                     }
-                    else if(partidos.containsKey(nr_notavel)) {
-                            partidos.get(nr_notavel).addVotosLegenda(qt_votos);
-                        }
                 }
-                
+
             }
             s.close();
         } catch (FileNotFoundException e) {

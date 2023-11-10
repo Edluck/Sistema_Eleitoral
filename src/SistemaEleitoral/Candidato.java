@@ -33,7 +33,7 @@ public class Candidato {
     public int getCd_cargo() {
         return cd_cargo;
     }
-    public int getCd_cargo_situacao_tot() {
+    public int getCd_situacao_candidato_tot() {
         return cd_situacao_candidato_tot;
     }
     public int getNr_candidato() {
