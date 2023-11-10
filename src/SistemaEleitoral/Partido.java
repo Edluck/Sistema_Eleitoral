@@ -50,7 +50,7 @@ public class Partido {
         return nr_partido;
     }
 
-    void addCandidato(Candidato c) {
+    public void addCandidato(Candidato c) {
         candidatos.put(c.getNr_candidato(), c);
     }
 

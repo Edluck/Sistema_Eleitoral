@@ -62,7 +62,15 @@ public class GeraRelatorios {
             System.out.println("Deputados estaduais eleitos: ");
 
         List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
-        Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
+
+        Comparator<Candidato> comparator = (c1, c2) -> {
+            int res = 0;
+            res = c2.getQtd_votos() - c1.getQtd_votos();
+            if (res == 0) {
+                res = c2.getIdade() - c1.getIdade();
+            }
+            return res;
+        };
         order.sort(comparator);
 
         Iterator<Candidato> it = order.iterator();
@@ -90,7 +98,14 @@ public class GeraRelatorios {
         }
         System.out.println("\nCandidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):");
         List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
-        Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
+        Comparator<Candidato> comparator = (c1, c2) -> {
+            int res = 0;
+            res = c2.getQtd_votos() - c1.getQtd_votos();
+            if (res == 0) {
+                res = c2.getIdade() - c1.getIdade();
+            }
+            return res;
+        };
         order.sort(comparator);
 
         Iterator<Candidato> it = order.iterator();
@@ -121,7 +136,14 @@ public class GeraRelatorios {
         }
         System.out.println("\nTeriam sido eleitos se a votação fosse majoritária, e não foram eleitos:\n(com sua posição no ranking de mais votados)");
         List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
-        Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
+        Comparator<Candidato> comparator = (c1, c2) -> {
+            int res = 0;
+            res = c2.getQtd_votos() - c1.getQtd_votos();
+            if (res == 0) {
+                res = c2.getIdade() - c1.getIdade();
+            }
+            return res;
+        };
         order.sort(comparator);
 
         Iterator<Candidato> it = order.iterator();
@@ -152,7 +174,14 @@ public class GeraRelatorios {
         }
         System.out.println("\nEleitos, que se beneficiaram do sistema proporcional:\n(com sua posição no ranking de mais votados)");
         List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
-        Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
+        Comparator<Candidato> comparator = (c1, c2) -> {
+            int res = 0;
+            res = c2.getQtd_votos() - c1.getQtd_votos();
+            if (res == 0) {
+                res = c2.getIdade() - c1.getIdade();
+            }
+            return res;
+        };
         order.sort(comparator);
 
         Iterator<Candidato> it = order.iterator();
@@ -175,7 +204,14 @@ public class GeraRelatorios {
                 
             System.out.println("\nVotação dos partidos e número de candidatos eleitos:");
         List<Partido> order = new ArrayList<Partido>(partidos.values());
-        Comparator<Partido> comparator = (p1, p2) -> p2.getVotosTotais() - p1.getVotosTotais();
+        Comparator<Partido> comparator = (p1, p2) -> {
+            int res = 0;
+            res = p2.getVotosTotais() - p1.getVotosTotais();
+            if (res == 0) {
+                res = p1.getNr_partido() - p2.getNr_partido();
+            }
+            return res;
+        };
         order.sort(comparator);
         int i = 1;
         Iterator<Partido> it = order.iterator();
@@ -195,6 +231,9 @@ public class GeraRelatorios {
 
     public static void geraRelatorio7(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
+                System.out.println("\nPrimeiro e último colocados de cada partido:");
+
+                
 
 
     }

@@ -8,13 +8,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 import SistemaEleitoral.Candidato;
+import SistemaEleitoral.Partido;
 
 public class CSVCandidatosReader {
 
     private static String diretorio_arq_cand = "src/CSVReader/";
 
     public static void candidatosReader(String tipo_deputado, String arquivo_cand, String data_eleicao,
-            Map<Integer, Candidato> candidatos)
+            Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos)
             throws FileNotFoundException {
 
         try (FileInputStream file = new FileInputStream(diretorio_arq_cand + arquivo_cand)) {
@@ -27,6 +28,11 @@ public class CSVCandidatosReader {
                     dados[i] = dados[i].replace("\"", "");
                 }
                 // adiciona asterisco ao nome do candidato indicando possuir federacao
+                if(partidos.get(Integer.parseInt(dados[27])) == null) {
+                    Partido p = new Partido(dados[28], Integer.parseInt(dados[27]));
+                    partidos.put(Integer.parseInt(dados[27]), p);
+                }
+
                 if (dados[13].equals("6") || dados[13].equals("7")) {
 
                     if (!(dados[30].equals("-1")))
@@ -41,7 +47,9 @@ public class CSVCandidatosReader {
                             Integer.parseInt(dados[56]), Integer.parseInt(dados[45]), dados[67]);
                     c.setIdade(dt_eleicao);
                     candidatos.put(Integer.parseInt(dados[16]), c);
+                    partidos.get(Integer.parseInt(dados[27])).addCandidato(c);
                 }
+                
             }
             s.close();
         } catch (FileNotFoundException e) {
