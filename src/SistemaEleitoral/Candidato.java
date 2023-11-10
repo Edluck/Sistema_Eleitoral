@@ -74,7 +74,7 @@ public class Candidato {
         return this.idade;
      }
 
-     public void addVoto(int n_votos) {
+     public void addVotos(int n_votos) {
          this.qtd_votos += n_votos;
      }
      public int getQtd_votos() {

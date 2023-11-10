@@ -8,10 +8,20 @@ public class Partido {
     private String sg_partido;
     private int nr_partido;
     private Map<Integer, Candidato> candidatos = new HashMap<Integer, Candidato>();
+    private int votos_legenda;
     
     public Partido(String nome, int nr_partido) {
         this.sg_partido = nome;
         this.nr_partido = nr_partido;
+        this.votos_legenda = 0;
+    }
+
+    public void addVotosLegenda(int votos) {
+        this.votos_legenda += votos;
+    }
+
+    public int getVotosLegenda() {
+        return votos_legenda;
     }
 
     public String getSg_partido() {
@@ -34,7 +44,7 @@ public class Partido {
     public String toString() {
         String saida = "";
 
-        saida += "Partido: " + sg_partido + " (" + nr_partido + ")\n";
+        saida += "Partido: " + sg_partido + " (" + nr_partido + " " + votos_legenda + ")\n";
         saida += "Candidatos:\n";
         for(Candidato c : candidatos.values()) {
             saida += c + "\n";

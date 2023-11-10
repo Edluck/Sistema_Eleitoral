@@ -14,8 +14,8 @@ public class Acervo {
         try {
             CSVCandidatosReader.candidatosReader(tipo_deputado, arq_cand, data_eleicao, candidatos);
             cria_partidos(candidatos);
-            CSVVotacaoReader.votacaoReader(arq_vot);
-            imprime_partidos();// ja volto
+            CSVVotacaoReader.votacaoReader(arq_vot, candidatos, partidos);
+            imprime_partidos();
         } catch (Exception e) {
             System.out.println("Erro ao ler arquivos");
             e.printStackTrace();
