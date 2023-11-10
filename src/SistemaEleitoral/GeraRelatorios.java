@@ -184,7 +184,7 @@ public class GeraRelatorios {
         percentual_votos_legenda = Double.parseDouble(df.format(percentual_votos_legenda).replace(",", ","));
         percentual_votos_nomimais = Double.parseDouble(df.format(percentual_votos_nomimais).replace(",", ","));
 
-        System.out.println("Total de votos válidos: " + total_votos_validos);
+        System.out.println("\nTotal de votos válidos: " + total_votos_validos);
         System.out
                 .println("Total de votos nominais: " + total_votos_nomimais + " (" + percentual_votos_nomimais + "%)");
         System.out

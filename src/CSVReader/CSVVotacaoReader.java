@@ -11,7 +11,7 @@ import SistemaEleitoral.Partido;
 public class CSVVotacaoReader {
     private static String diretorio_arq_vot = "src/CSVReader/";
 
-    public static void votacaoReader(String arquivo_vot, Map<Integer, Candidato> candidatos,
+    public static void votacaoReader(String tipo_deputado,String arquivo_vot, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos)
             throws FileNotFoundException {
 
@@ -26,9 +26,16 @@ public class CSVVotacaoReader {
 
                 int nr_notavel = Integer.parseInt(dados[19]);
                 int qt_votos = Integer.parseInt(dados[21]);
+
+                int nr_tipo_deputado = 0;
+                if(tipo_deputado.equals("estadual"))
+                    nr_tipo_deputado = 7;
+                else if(tipo_deputado.equals("federal"))
+                    nr_tipo_deputado = 6;
+
                 if (nr_notavel < 95 || nr_notavel > 98) {
 
-                    
+                    if(nr_tipo_deputado == Integer.parseInt(dados[17])) {
                     if (candidatos.containsKey(nr_notavel)) {
                         if (candidatos.get(nr_notavel).getNm_tipo_destinacao_votos().contains("legenda")) {
                             int nr_partido = candidatos.get(nr_notavel).getNr_partido();
@@ -40,7 +47,9 @@ public class CSVVotacaoReader {
                     } else if (partidos.containsKey(nr_notavel)) {
                         partidos.get(nr_notavel).addVotosLegenda(qt_votos);
                     }
-                
+                    }
+                    
+
             }
             }
             s.close();
