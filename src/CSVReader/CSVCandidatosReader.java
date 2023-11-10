@@ -19,6 +19,7 @@ public class CSVCandidatosReader {
 
         try (FileInputStream file = new FileInputStream(diretorio_arq_cand + arquivo_cand)) {
             Scanner s = new Scanner(file, "ISO-8859-1");
+            s.nextLine();
             while (s.hasNextLine()) {
                 String dados[] = s.nextLine().split(";");
                 // Apenas candidatos deferidos

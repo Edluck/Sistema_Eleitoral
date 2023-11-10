@@ -24,6 +24,8 @@ public class App {
                 i++;
             }
         }
+
+        System.out.println(args[0]);
         
         //printRelatorioIdade(candidatos, i);
 }

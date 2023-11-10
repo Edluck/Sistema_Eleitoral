@@ -3,5 +3,6 @@ bin/CSVReader/candidatos.csv
 bin/CSVReader/votacao.csv
 src/CSVReader/candidatos.csv
 src/CSVReader/votacao.csv
-bin/*
+bin/*.class
+bin/CSVReader/*.class
 
