@@ -174,7 +174,6 @@ public class GeraRelatorios {
             Map<Integer, Partido> partidos) {
                 
             System.out.println("\nVotação dos partidos e número de candidatos eleitos:");
-                // 12 - PSC - 20, 73.749 votos (71.098 nominais e 2.651 de legenda), 1 candidato eleito
         List<Partido> order = new ArrayList<Partido>(partidos.values());
         Comparator<Partido> comparator = (p1, p2) -> p2.getVotosTotais() - p1.getVotosTotais();
         order.sort(comparator);
@@ -187,7 +186,6 @@ public class GeraRelatorios {
                 if(c.getCd_cargo() == nr_tipo_cand && (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)) {
                     qtd_eleitos_partido++;
                 }
-                
             }
             System.out.println(i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nominais e " + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido + " candidatos eleitos");
 
@@ -198,7 +196,7 @@ public class GeraRelatorios {
     public static void geraRelatorio7(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
 
-                
+
     }
 
     public static void geraRelatorio8(int nr_tipo_cand, Map<Integer, Candidato> candidatos,

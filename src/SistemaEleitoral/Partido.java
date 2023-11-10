@@ -20,17 +20,16 @@ public class Partido {
     }
 
     public int getVotosTotais() {
-        votos_nominais_total = 0;
-        for(Candidato c : candidatos.values()) {
-            votos_nominais_total += c.getQtd_votos();
-        }
+        votos_nominais_total = getVotosNominaisTotal();
         votos_totais = votos_nominais_total + votos_legenda;
         return votos_totais;
     }
     public int getVotosNominaisTotal() {
         votos_nominais_total = 0;
         for(Candidato c : candidatos.values()) {
-            votos_nominais_total += c.getQtd_votos();
+            if (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16) {   
+                votos_nominais_total += c.getQtd_votos();   
+            }
         }
         return votos_nominais_total;
     }   

@@ -34,6 +34,7 @@ public class CSVVotacaoReader {
                 int nr_notavel = Integer.parseInt(dados[19]);
                 int qt_votos = Integer.parseInt(dados[21]);
 
+
                 if (nr_notavel < 95 || nr_notavel > 98) {
                     if (nr_tipo_deputado == Integer.parseInt(dados[17])) {
                         if (candidatos.containsKey(nr_notavel)) {
