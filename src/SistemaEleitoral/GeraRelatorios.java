@@ -2,6 +2,13 @@ package SistemaEleitoral;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 public class GeraRelatorios {
@@ -41,16 +48,37 @@ public class GeraRelatorios {
             System.out.println("Deputados federais eleitos: ");
         else if (nr_tipo_cand == 7)
             System.out.println("Deputados estaduais eleitos: ");
+        
+        List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
+        Comparator<Candidato> comparator = (c1, c2) -> c2.getQtd_votos() - c1.getQtd_votos();
+        order.sort(comparator);
 
-        for (Candidato c : candidatos.values()) {
-            if (c.getCd_cargo() == nr_tipo_cand
-                    && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+        Iterator<Candidato> it = order.iterator();
+
+        while (it.hasNext() == true) {
+            Candidato c = it.next();
+            if (c.getCd_cargo() == nr_tipo_cand && 
+            (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
+            {
                 if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) {
                     System.out.println(i + " - " + c);
                     i++;
                 }
             }
         }
+        
+        /*
+        for (Candidato c : candidatos.values() ) {
+            if (c.getCd_cargo() == nr_tipo_cand && 
+            (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
+            {
+                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) {
+                    System.out.println(i + " - " + c);
+                    i++;
+                }
+            }
+        }
+         */
     }
 
     public static void geraRelatorio2(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
@@ -166,7 +194,7 @@ public class GeraRelatorios {
         porcentagem_feminino = ((double) qtd_feminino / (qtd_masculino + qtd_feminino)) * 100;
 
         System.out.println(
-                "Feminino: " + format2.format(qtd_feminino) + " (" + format.format(porcentagem_feminino) + "%)");
+                "Feminino:  " + format2.format(qtd_feminino) + " (" + format.format(porcentagem_feminino) + "%)");
         System.out.println(
                 "Masculino: " + format2.format(qtd_masculino) + " (" + format.format(porcentagem_masculino) + "%)");
     }
@@ -201,8 +229,8 @@ public class GeraRelatorios {
         format2.setDecimalFormatSymbols(symbols2);
         format.setDecimalFormatSymbols(symbols);
 
-        System.out.println("\nTotal de votos válidos: " + format2.format(total_votos_validos));
-        System.out.println("Total de votos nominais: " + format2.format(total_votos_nomimais) + " ("
+        System.out.println("\nTotal de votos válidos:    " + format2.format(total_votos_validos));
+        System.out.println("Total de votos nominais:   " + format2.format(total_votos_nomimais) + " ("
                         + format.format(percentual_votos_nomimais) + "%)");
         System.out.println("Total de votos de legenda: " + format2.format(total_votos_legenda) + " ("
                         + format.format(percentual_votos_legenda) + "%)");

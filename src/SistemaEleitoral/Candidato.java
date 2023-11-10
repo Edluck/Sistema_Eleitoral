@@ -1,5 +1,7 @@
 package SistemaEleitoral;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 
 public class Candidato {
@@ -83,6 +85,11 @@ public class Candidato {
 
     @Override
     public String toString() {
-        return this.nm_urna_candidato + " (" + this.sg_partido + ", " + this.qtd_votos + ")";
+        DecimalFormat format = new DecimalFormat("#,###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        format.setDecimalFormatSymbols(symbols);
+
+        return this.nm_urna_candidato + " (" + this.sg_partido + ", " + format.format(this.qtd_votos) + " votos)";
     }
 }
