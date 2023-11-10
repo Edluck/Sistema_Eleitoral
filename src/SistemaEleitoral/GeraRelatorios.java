@@ -6,53 +6,82 @@ import java.util.Map;
 public class GeraRelatorios {
 
     public static void geraRelatorioTodos(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
-        geraRelatorio10(tipo_deputado, candidatos, partidos);
+        int nr_tipo_cand = 0;
+        if(tipo_deputado.equals("federal"))
+            nr_tipo_cand = 6;
+        else if(tipo_deputado.equals("estadual"))
+            nr_tipo_cand = 7;
+        
+        geraRelatorio1(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio2(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio3(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio4(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio5(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio6(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio7(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio8(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio9(nr_tipo_cand, candidatos, partidos);
+        geraRelatorio10(nr_tipo_cand, candidatos, partidos);
     }
 
-    public static void geraRelatorio1(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio1(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+        int nr_vagas = 0, i = 1;
+        for(Candidato c : candidatos.values()) {
+            if(c.getCd_cargo() == nr_tipo_cand && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if(c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)
+                nr_vagas++;
+            }
+        }
+        System.out.println("Número de vagas: " + nr_vagas + "\n");
+        if(nr_tipo_cand == 6)
+            System.out.println("Deputados federais eleitos: ");
+        else if(nr_tipo_cand == 7)
+            System.out.println("Deputados estaduais eleitos: ");
+
+        for(Candidato c: candidatos.values()) {
+            if(c.getCd_cargo() == nr_tipo_cand && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if(c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) {
+                System.out.println(i + " - " + c);
+                i++;
+                }
+            }
+        }
+    }
+    public static void geraRelatorio2(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public static void geraRelatorio2(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio3(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public static void geraRelatorio3(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio4(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public static void geraRelatorio4(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio5(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public static void geraRelatorio5(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio6(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public static void geraRelatorio6(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio7(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public static void geraRelatorio7(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio8(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public static void geraRelatorio8(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio9(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         
     }
-    public static void geraRelatorio9(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
-        
-    }
-    public static void geraRelatorio10(String tipo_deputado,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
+    public static void geraRelatorio10(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         int total_votos_legenda = 0;
         int total_votos_nomimais = 0;
         int total_votos_validos = 0;
         double percentual_votos_legenda = 0;
         double percentual_votos_nomimais = 0;
 
-        int tipo_cand = 0;
-        if(tipo_deputado.equals("federal"))
-            tipo_cand = 6;
-        else if(tipo_deputado.equals("estadual"))
-            tipo_cand = 7;
-
         for(Partido p : partidos.values()) {
             total_votos_legenda += p.getVotosLegenda();
             for(Candidato c : p.getCandidatos().values()) {
-                if(c.getCd_cargo() == tipo_cand && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16))
+                if(c.getCd_cargo() == nr_tipo_cand && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16))
                 total_votos_nomimais += c.getQtd_votos();
             }
             }
