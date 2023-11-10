@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,57 +13,44 @@ public class CSVCandidatosReader {
 
     private static String diretorio_arq_cand = "src/CSVReader/";
 
-    public static void candidatosReader(String arquivo_cand, String tipo_deputado, Map<Integer, Candidato> candidatos)
+    public static void candidatosReader(String tipo_deputado, String arquivo_cand, String data_eleicao,
+            Map<Integer, Candidato> candidatos)
             throws FileNotFoundException {
+
         try (FileInputStream file = new FileInputStream(diretorio_arq_cand + arquivo_cand)) {
             Scanner s = new Scanner(file, "ISO-8859-1");
-            int n_vagas = 0;
             while (s.hasNextLine()) {
                 String dados[] = s.nextLine().split(";");
                 // Apenas candidatos deferidos
                 for (int i = 0; i < dados.length; i++) {
                     dados[i] = dados[i].replace("\"", "");
                 }
+                    // adiciona asterisco ao nome do candidato indicando possuir federacao
+                    if (!(dados[30].equals("-1")))
+                        dados[18] = "*" + dados[18];
 
-                if (dados[68].equals("2") || dados[68].equals("16")) {
-                    // Para federal
-                    if (tipo_deputado.equals("federal")) {
-                        if (dados[13].equals("6")) {
-                            // adiciona asterisco ao nome do candidato indicando possuir federacao
-                            if (!(dados[30].equals("-1")))
-                                dados[18] = "*" + dados[18];
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+                    LocalDate dt1 = LocalDate.parse(dados[42], formatter);
+                    LocalDate dt_eleicao = LocalDate.parse(data_eleicao, formatter);
+                    Candidato c = new Candidato(Integer.parseInt(dados[13]), Integer.parseInt(dados[68]),
+                            Integer.parseInt(dados[16]), dados[18], Integer.parseInt(dados[27]), dados[28],
+                            Integer.parseInt(dados[30]), dt1,
+                            Integer.parseInt(dados[56]), Integer.parseInt(dados[45]), dados[67]);
+                    c.setIdade(dt_eleicao);
+                    candidatos.put(Integer.parseInt(dados[16]), c);
 
-                            if (dados[56].equals("2") || dados[56].equals("3"))
-                                n_vagas++;
-
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-                            LocalDate dt1 = LocalDate.parse(dados[42], formatter);
-
-                            Candidato c = new Candidato(Integer.parseInt(dados[13]), Integer.parseInt(dados[68]),
-                                    Integer.parseInt(dados[16]), dados[18], Integer.parseInt(dados[27]), dados[28],
-                                    Integer.parseInt(dados[30]), dt1,
-                                    Integer.parseInt(dados[56]), Integer.parseInt(dados[45]), dados[67]);
-
-                            candidatos.put(Integer.parseInt(dados[16]), c);
-                        }
-                    }
-                    // Para estadual
-                    else if (tipo_deputado.equals("estadual")) {
-                        if (dados[13].equals("7")) {
-
-                            // adiciona asterisco ao nome do candidato indicando possuir federacao
-                            if (!(dados[30].equals("-1")))
-                                dados[18] = "*" + dados[18];
-                            // contabilizar vagas para deputador estadual
-                            if (dados[56].equals("2") || dados[56].equals("3"))
-                                n_vagas++;
-
-                        }
-
-                    }
-                }
+                        System.out.print(dados[13]);
+                        System.out.print(" " + dados[68]);
+                        System.out.print(" " + dados[16]);
+                        System.out.print(" " + dados[18]);
+                        System.out.print(" " + dados[27]);
+                        System.out.print(" " + dados[28]);
+                        System.out.print(" " + dados[30]);
+                        System.out.print(" " + dados[42]);
+                        System.out.print(" " + dados[56]);
+                        System.out.print(" " + dados[45]);
+                        System.out.println(" " + dados[67]);
             }
-            System.out.println("Numero de vagas: " + n_vagas);
             s.close();
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo nao encontrado");

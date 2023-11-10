@@ -65,12 +65,24 @@ public class Candidato {
     }
 
      private int qtd_votos = 0;
+     private int idade = 0;
 
-     public void addVoto() {
-         this.qtd_votos++;
+     public void setIdade(LocalDate data_eleicao) {
+         this.idade = data_eleicao.getYear() - this.dt_nascimento.getYear();
+     }
+     public int getIdade() {
+        return this.idade;
+     }
+
+     public void addVoto(int n_votos) {
+         this.qtd_votos += n_votos;
      }
      public int getQtd_votos() {
          return qtd_votos;
      }
 
+    @Override
+    public String toString() {
+        return this.nm_urna_candidato + " (" + this.sg_partido + ", " + this.qtd_votos + ")";
+    }
 }
