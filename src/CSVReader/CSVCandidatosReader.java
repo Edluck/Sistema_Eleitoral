@@ -39,18 +39,6 @@ public class CSVCandidatosReader {
                             Integer.parseInt(dados[56]), Integer.parseInt(dados[45]), dados[67]);
                     c.setIdade(dt_eleicao);
                     candidatos.put(Integer.parseInt(dados[16]), c);
-
-                        System.out.print(dados[13]);
-                        System.out.print(" " + dados[68]);
-                        System.out.print(" " + dados[16]);
-                        System.out.print(" " + dados[18]);
-                        System.out.print(" " + dados[27]);
-                        System.out.print(" " + dados[28]);
-                        System.out.print(" " + dados[30]);
-                        System.out.print(" " + dados[42]);
-                        System.out.print(" " + dados[56]);
-                        System.out.print(" " + dados[45]);
-                        System.out.println(" " + dados[67]);
             }
             s.close();
         } catch (FileNotFoundException e) {

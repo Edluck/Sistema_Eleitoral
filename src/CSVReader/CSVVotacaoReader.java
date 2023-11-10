@@ -9,13 +9,13 @@ public class CSVVotacaoReader {
     public static void votacaoReader(String arquivo_vot) throws FileNotFoundException {
         try(FileInputStream file = new FileInputStream(diretorio_arq_vot + arquivo_vot)) {
             Scanner s = new Scanner(file, "ISO-8859-1");
-           // while(s.hasNextLine()) {
-              //  String dados[] = s.nextLine().split(";");
-              //  for (int i = 0; i < dados.length; i++) {
-              //      dados[i] = dados[i].replace("\"", "");
-               // }
+            while(s.hasNextLine()) {
+                String dados[] = s.nextLine().split(";");
+                for (int i = 0; i < dados.length; i++) {
+                    dados[i] = dados[i].replace("\"", "");
+                }
                 
-           // }
+            }
             s.close();
         }
         catch(FileNotFoundException e) {
