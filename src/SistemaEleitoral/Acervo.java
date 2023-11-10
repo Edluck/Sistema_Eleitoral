@@ -20,12 +20,6 @@ public class Acervo {
             System.out.println("Erro ao ler arquivos");
             e.printStackTrace();
         }
-        
-        for(Candidato c : candidatos.values()) {
-            if(c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)
-            System.out.println(c);
-        }
-
     }
 
     private void cria_partidos(Map<Integer, Candidato> candidatos) {
