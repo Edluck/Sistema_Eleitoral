@@ -9,12 +9,31 @@ public class Partido {
     private int nr_partido;
     private Map<Integer, Candidato> candidatos = new HashMap<Integer, Candidato>();
     private int votos_legenda;
+    private int votos_nominais_total;
+    private int votos_totais;
     
     public Partido(String nome, int nr_partido) {
         this.sg_partido = nome;
         this.nr_partido = nr_partido;
         this.votos_legenda = 0;
+        this.votos_totais = 0;
     }
+
+    public int getVotosTotais() {
+        votos_nominais_total = 0;
+        for(Candidato c : candidatos.values()) {
+            votos_nominais_total += c.getQtd_votos();
+        }
+        votos_totais = votos_nominais_total + votos_legenda;
+        return votos_totais;
+    }
+    public int getVotosNominaisTotal() {
+        votos_nominais_total = 0;
+        for(Candidato c : candidatos.values()) {
+            votos_nominais_total += c.getQtd_votos();
+        }
+        return votos_nominais_total;
+    }   
 
     public void addVotosLegenda(int votos) {
         this.votos_legenda += votos;
@@ -44,12 +63,8 @@ public class Partido {
     public String toString() {
         String saida = "";
 
-        saida += "Partido: " + sg_partido + " (" + nr_partido + " " + votos_legenda + ")\n";
-        saida += "Candidatos:\n";
-        for(Candidato c : candidatos.values()) {
-            saida += c + "\n";
-        }
-        
+        saida += sg_partido + " - " + nr_partido + "," ;
+
         return saida;
     }
     
