@@ -12,7 +12,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 public class GeraRelatorios {
-    
+
     public static void geraRelatorioTodos(String tipo_deputado, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
         int nr_tipo_cand = 0;
@@ -35,7 +35,7 @@ public class GeraRelatorios {
 
     public static void geraRelatorio1(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
-                int nr_vagas = 0;
+        int nr_vagas = 0;
         for (Candidato c : candidatos.values()) {
             if (c.getCd_cargo() == nr_tipo_cand
                     && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
@@ -87,7 +87,8 @@ public class GeraRelatorios {
         }
     }
 
-    public static void geraRelatorio3(int nr_tipo_cand, Map<Integer, Candidato> candidatos,Map<Integer, Partido> partidos) {
+    public static void geraRelatorio3(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
+            Map<Integer, Partido> partidos) {
         int nr_vagas = 0, i = 1;
         for (Candidato c : candidatos.values()) {
             if (c.getCd_cargo() == nr_tipo_cand
@@ -96,7 +97,8 @@ public class GeraRelatorios {
                     nr_vagas++;
             }
         }
-        System.out.println("\nCandidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):");
+        System.out
+                .println("\nCandidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):");
         List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
         Comparator<Candidato> comparator = (c1, c2) -> {
             int res = 0;
@@ -112,9 +114,8 @@ public class GeraRelatorios {
 
         while (it.hasNext() == true && nr_vagas >= i) {
             Candidato c = it.next();
-            if (c.getCd_cargo() == nr_tipo_cand && 
-            (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
-            {
+            if (c.getCd_cargo() == nr_tipo_cand &&
+                    (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
 
                 System.out.println(i + " - " + c);
                 i++;
@@ -126,7 +127,7 @@ public class GeraRelatorios {
 
     public static void geraRelatorio4(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
-               int nr_vagas = 0, i = 1;
+        int nr_vagas = 0, i = 1;
         for (Candidato c : candidatos.values()) {
             if (c.getCd_cargo() == nr_tipo_cand
                     && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
@@ -134,7 +135,8 @@ public class GeraRelatorios {
                     nr_vagas++;
             }
         }
-        System.out.println("\nTeriam sido eleitos se a votação fosse majoritária, e não foram eleitos:\n(com sua posição no ranking de mais votados)");
+        System.out.println(
+                "\nTeriam sido eleitos se a votação fosse majoritária, e não foram eleitos:\n(com sua posição no ranking de mais votados)");
         List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
         Comparator<Candidato> comparator = (c1, c2) -> {
             int res = 0;
@@ -150,21 +152,20 @@ public class GeraRelatorios {
 
         while (it.hasNext() == true && nr_vagas >= i) {
             Candidato c = it.next();
-            if (c.getCd_cargo() == nr_tipo_cand && 
-            (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
-            {
-                if(!(c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3))
-                System.out.println(i + " - " + c);
+            if (c.getCd_cargo() == nr_tipo_cand &&
+                    (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if (!(c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3))
+                    System.out.println(i + " - " + c);
                 i++;
 
             }
-        } 
+        }
     }
 
     public static void geraRelatorio5(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
 
-                int nr_vagas = 0, i = 1;
+        int nr_vagas = 0, i = 1;
         for (Candidato c : candidatos.values()) {
             if (c.getCd_cargo() == nr_tipo_cand
                     && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
@@ -172,7 +173,8 @@ public class GeraRelatorios {
                     nr_vagas++;
             }
         }
-        System.out.println("\nEleitos, que se beneficiaram do sistema proporcional:\n(com sua posição no ranking de mais votados)");
+        System.out.println(
+                "\nEleitos, que se beneficiaram do sistema proporcional:\n(com sua posição no ranking de mais votados)");
         List<Candidato> order = new ArrayList<Candidato>(candidatos.values());
         Comparator<Candidato> comparator = (c1, c2) -> {
             int res = 0;
@@ -188,21 +190,20 @@ public class GeraRelatorios {
 
         while (it.hasNext() == true) {
             Candidato c = it.next();
-            if (c.getCd_cargo() == nr_tipo_cand && 
-            (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) 
-            {
-                if((c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) && i > nr_vagas)
-                System.out.println(i + " - " + c);
+            if (c.getCd_cargo() == nr_tipo_cand &&
+                    (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
+                if ((c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) && i > nr_vagas)
+                    System.out.println(i + " - " + c);
                 i++;
 
             }
-        } 
+        }
     }
 
     public static void geraRelatorio6(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
-                
-            System.out.println("\nVotação dos partidos e número de candidatos eleitos:");
+
+        System.out.println("\nVotação dos partidos e número de candidatos eleitos:");
         List<Partido> order = new ArrayList<Partido>(partidos.values());
         Comparator<Partido> comparator = (p1, p2) -> {
             int res = 0;
@@ -218,23 +219,52 @@ public class GeraRelatorios {
         while (it.hasNext() == true) {
             Partido p = it.next();
             int qtd_eleitos_partido = 0;
-            for(Candidato c : p.getCandidatos().values()) {
-                if(c.getCd_cargo() == nr_tipo_cand && (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)) {
+            for (Candidato c : p.getCandidatos().values()) {
+                if (c.getCd_cargo() == nr_tipo_cand && (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)) {
                     qtd_eleitos_partido++;
                 }
             }
-            System.out.println(i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nominais e " + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido + " candidatos eleitos");
+            System.out.println(
+                    i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nominais e "
+                            + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido + " candidatos eleitos");
 
             i++;
-        } 
+        }
     }
 
     public static void geraRelatorio7(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
-                System.out.println("\nPrimeiro e último colocados de cada partido:");
+        System.out.println("\nPrimeiro e último colocados de cada partido:");
+        List<Partido> order_p = new ArrayList<Partido>(partidos.values());
+        Comparator<Partido> comparator_p = (p1, p2) -> {
+            int res = 0;
+            res = p2.getVotosTotais() - p1.getVotosTotais();
+            if (res == 0) {
+                res = p1.getNr_partido() - p2.getNr_partido();
+            }
+            return res;
+        };
+        order_p.sort(comparator_p);
+        int i = 1;
+        Iterator<Partido> it_p = order_p.iterator();
+        while (it_p.hasNext() == true) {
+            Partido p = it_p.next();
+            List<Candidato> order_c = new ArrayList<Candidato>(p.getCandidatos().values());
+            Comparator<Candidato> comparator_c = (c1, c2) -> {
+                int res = 0;
+                res = c2.getQtd_votos() - c1.getQtd_votos();
+                if (res == 0) {
+                    res = c2.getIdade() - c1.getIdade();
+                }
+                return res;
+            };
+            order_c.sort(comparator_c);
+            Candidato c_melhor = order_c.get(0);
+            Candidato c_pior = order_c.get(p.getCandidatos().size() - 1);
 
-                
-
+            System.out.println(i + " - " + p + " " + c_melhor.getNm_urna_candidato() + " (" + c_melhor.getNr_candidato() + ", " + c_melhor.getQtd_votos()
+                                + ")" +" / " + c_pior.getNm_urna_candidato() + " (" + c_pior.getNr_candidato() + ", " + c_pior.getQtd_votos() + ")");
+        }
 
     }
 
