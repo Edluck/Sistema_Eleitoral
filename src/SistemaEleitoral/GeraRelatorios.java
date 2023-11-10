@@ -1,6 +1,7 @@
 package SistemaEleitoral;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Map;
 
 public class GeraRelatorios {
@@ -109,7 +110,15 @@ public class GeraRelatorios {
                     idade_maior_60++;
             }
         }
-        DecimalFormat df = new DecimalFormat("0.00");
+        DecimalFormat format = new DecimalFormat("#,###.00");
+        DecimalFormat format2 = new DecimalFormat("#,###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator(',');
+        symbols2.setGroupingSeparator('.');
+        format2.setDecimalFormatSymbols(symbols2);
+        format.setDecimalFormatSymbols(symbols);
+
         porcentagem_menor_30 = ((double) idade_menor_30
                 / (idade_menor_30 + idade_30_40 + idade_40_50 + idade_50_60 + idade_maior_60)) * 100;
         porcentagem_30_40 = ((double) idade_30_40
@@ -120,17 +129,12 @@ public class GeraRelatorios {
                 / (idade_menor_30 + idade_30_40 + idade_40_50 + idade_50_60 + idade_maior_60)) * 100;
         porcentagem_maior_60 = ((double) idade_maior_60
                 / (idade_menor_30 + idade_30_40 + idade_40_50 + idade_50_60 + idade_maior_60)) * 100;
-        porcentagem_menor_30 = Double.parseDouble(df.format(porcentagem_menor_30).replace(",", ","));
-        porcentagem_30_40 = Double.parseDouble(df.format(porcentagem_30_40).replace(",", ","));
-        porcentagem_40_50 = Double.parseDouble(df.format(porcentagem_40_50).replace(",", ","));
-        porcentagem_50_60 = Double.parseDouble(df.format(porcentagem_50_60).replace(",", ","));
-        porcentagem_maior_60 = Double.parseDouble(df.format(porcentagem_maior_60).replace(",", ","));
 
-        System.out.println("      Idade < 30: " + idade_menor_30 + " (" + porcentagem_menor_30 + "%)");
-        System.out.println("30 <= Idade < 40: " + idade_30_40 + " (" + porcentagem_30_40 + "%)");
-        System.out.println("40 <= Idade < 50: " + idade_40_50 + " (" + porcentagem_40_50 + "%)");
-        System.out.println("50 <= Idade < 60: " + idade_50_60 + " (" + porcentagem_50_60 + "%)");
-        System.out.println("60 <= Idade     : " + idade_maior_60 + " (" + porcentagem_maior_60 + "%)");
+        System.out.println("      Idade < 30: " + idade_menor_30 + " (" + format.format(porcentagem_menor_30) + "%)");
+        System.out.println("30 <= Idade < 40: " + idade_30_40 + " (" + format.format(porcentagem_30_40) + "%)");
+        System.out.println("40 <= Idade < 50: " + idade_40_50 + " (" + format.format(porcentagem_40_50) + "%)");
+        System.out.println("50 <= Idade < 60: " + idade_50_60 + " (" + format.format(porcentagem_50_60) + "%)");
+        System.out.println("60 <= Idade     : " + idade_maior_60 + " (" + format.format(porcentagem_maior_60) + "%)");
     }
 
     public static void geraRelatorio9(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
@@ -149,14 +153,22 @@ public class GeraRelatorios {
                     qtd_feminino++;
             }
         }
-        DecimalFormat df = new DecimalFormat("0.00");
+        DecimalFormat format = new DecimalFormat("#,###.00");
+        DecimalFormat format2 = new DecimalFormat("#,###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator(',');
+        symbols2.setGroupingSeparator('.');
+        format2.setDecimalFormatSymbols(symbols2);
+        format.setDecimalFormatSymbols(symbols);
+
         porcentagem_masculino = ((double) qtd_masculino / (qtd_masculino + qtd_feminino)) * 100;
         porcentagem_feminino = ((double) qtd_feminino / (qtd_masculino + qtd_feminino)) * 100;
-        porcentagem_masculino = Double.parseDouble(df.format(porcentagem_masculino).replace(",", ","));
-        porcentagem_feminino = Double.parseDouble(df.format(porcentagem_feminino).replace(",", ","));
 
-        System.out.println("Feminino: " + qtd_feminino + " (" + porcentagem_feminino + "%)");
-        System.out.println("Masculino: " + qtd_masculino + " (" + porcentagem_masculino + "%)");
+        System.out.println(
+                "Feminino: " + format2.format(qtd_feminino) + " (" + format.format(porcentagem_feminino) + "%)");
+        System.out.println(
+                "Masculino: " + format2.format(qtd_masculino) + " (" + format.format(porcentagem_masculino) + "%)");
     }
 
     public static void geraRelatorio10(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
@@ -180,14 +192,19 @@ public class GeraRelatorios {
         percentual_votos_legenda = ((double) total_votos_legenda / total_votos_validos) * 100;
         percentual_votos_nomimais = ((double) total_votos_nomimais / total_votos_validos) * 100;
 
-        DecimalFormat df = new DecimalFormat("0.00");
-        percentual_votos_legenda = Double.parseDouble(df.format(percentual_votos_legenda).replace(",", ","));
-        percentual_votos_nomimais = Double.parseDouble(df.format(percentual_votos_nomimais).replace(",", ","));
+        DecimalFormat format = new DecimalFormat("#,###.00");
+        DecimalFormat format2 = new DecimalFormat("#,###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator(',');
+        symbols2.setGroupingSeparator('.');
+        format2.setDecimalFormatSymbols(symbols2);
+        format.setDecimalFormatSymbols(symbols);
 
-        System.out.println("\nTotal de votos válidos: " + total_votos_validos);
-        System.out
-                .println("Total de votos nominais: " + total_votos_nomimais + " (" + percentual_votos_nomimais + "%)");
-        System.out
-                .println("Total de votos de legenda: " + total_votos_legenda + " (" + percentual_votos_legenda + "%)");
+        System.out.println("\nTotal de votos válidos: " + format2.format(total_votos_validos));
+        System.out.println("Total de votos nominais: " + format2.format(total_votos_nomimais) + " ("
+                        + format.format(percentual_votos_nomimais) + "%)");
+        System.out.println("Total de votos de legenda: " + format2.format(total_votos_legenda) + " ("
+                        + format.format(percentual_votos_legenda) + "%)");
     }
 }
