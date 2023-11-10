@@ -13,7 +13,7 @@ public class CSVCandidatosReader {
 
     private static String diretorio_arq_cand = "src/CSVReader/";
 
-    public static void candidatosReader(String arquivo_cand, String data_eleicao,
+    public static void candidatosReader(String tipo_deputado, String arquivo_cand, String data_eleicao,
             Map<Integer, Candidato> candidatos)
             throws FileNotFoundException {
 
@@ -26,7 +26,9 @@ public class CSVCandidatosReader {
                 for (int i = 0; i < dados.length; i++) {
                     dados[i] = dados[i].replace("\"", "");
                 }
-                    // adiciona asterisco ao nome do candidato indicando possuir federacao
+                // adiciona asterisco ao nome do candidato indicando possuir federacao
+                if (dados[13].equals("6") || dados[13].equals("7")) {
+
                     if (!(dados[30].equals("-1")))
                         dados[18] = "*" + dados[18];
 
@@ -39,6 +41,7 @@ public class CSVCandidatosReader {
                             Integer.parseInt(dados[56]), Integer.parseInt(dados[45]), dados[67]);
                     c.setIdade(dt_eleicao);
                     candidatos.put(Integer.parseInt(dados[16]), c);
+                }
             }
             s.close();
         } catch (FileNotFoundException e) {

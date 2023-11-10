@@ -27,6 +27,8 @@ public class CSVVotacaoReader {
                 int nr_notavel = Integer.parseInt(dados[19]);
                 int qt_votos = Integer.parseInt(dados[21]);
                 if (nr_notavel < 95 || nr_notavel > 98) {
+
+                    
                     if (candidatos.containsKey(nr_notavel)) {
                         if (candidatos.get(nr_notavel).getNm_tipo_destinacao_votos().contains("legenda")) {
                             int nr_partido = candidatos.get(nr_notavel).getNr_partido();
@@ -38,8 +40,8 @@ public class CSVVotacaoReader {
                     } else if (partidos.containsKey(nr_notavel)) {
                         partidos.get(nr_notavel).addVotosLegenda(qt_votos);
                     }
-                }
-
+                
+            }
             }
             s.close();
         } catch (FileNotFoundException e) {

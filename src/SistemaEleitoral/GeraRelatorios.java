@@ -69,7 +69,28 @@ public class GeraRelatorios {
         
     }
     public static void geraRelatorio9(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
-        
+        System.out.println("Eleitos, por gênero:");
+        int qtd_masculino = 0;
+        int qtd_feminino = 0;
+        double porcentagem_masculino = 0;
+        double porcentagem_feminino = 0;
+
+        for(Candidato c : candidatos.values()) {
+            if((c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) && c.getCd_cargo() == nr_tipo_cand) {
+                if(c.getCd_genero() == 2)
+                    qtd_masculino++;
+                else if(c.getCd_genero() == 4)
+                    qtd_feminino++;
+            }
+        }
+        DecimalFormat df = new DecimalFormat("0.00");
+        porcentagem_masculino = ((double)qtd_masculino / (qtd_masculino + qtd_feminino))*100;
+        porcentagem_feminino = ((double)qtd_feminino / (qtd_masculino + qtd_feminino))*100;
+        porcentagem_masculino = Double.parseDouble(df.format(porcentagem_masculino).replace(",", ","));
+        porcentagem_feminino = Double.parseDouble(df.format(porcentagem_feminino).replace(",", ","));
+
+        System.out.println("Feminino: " + qtd_feminino + " (" + porcentagem_feminino + "%)");
+        System.out.println("Masculino: " + qtd_masculino + " (" + porcentagem_masculino + "%)");
     }
     public static void geraRelatorio10(int nr_tipo_cand,Map<Integer, Candidato> candidatos, Map<Integer, Partido> partidos) {
         int total_votos_legenda = 0;
@@ -91,8 +112,8 @@ public class GeraRelatorios {
         percentual_votos_nomimais = ((double)total_votos_nomimais / total_votos_validos)*100;
 
         DecimalFormat df = new DecimalFormat("0.00");
-        percentual_votos_legenda = Double.parseDouble(df.format(percentual_votos_legenda).replace(",", "."));
-        percentual_votos_nomimais = Double.parseDouble(df.format(percentual_votos_nomimais).replace(",", "."));
+        percentual_votos_legenda = Double.parseDouble(df.format(percentual_votos_legenda).replace(",", ","));
+        percentual_votos_nomimais = Double.parseDouble(df.format(percentual_votos_nomimais).replace(",", ","));
 
         System.out.println("Total de votos válidos: " + total_votos_validos);
         System.out.println("Total de votos nominais: " + total_votos_nomimais + " (" + percentual_votos_nomimais + "%)");
