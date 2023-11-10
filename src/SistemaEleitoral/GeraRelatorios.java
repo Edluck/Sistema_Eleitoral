@@ -226,16 +226,18 @@ public class GeraRelatorios {
             }
 
             String plural_vtsNomTot = "l";
-            if (p.getVotosNominaisTotal()>1) {
+            if (p.getVotosNominaisTotal() > 1) {
                 plural_vtsNomTot = "is";
             }
-            
+
             String plural_eleito = "";
             if (qtd_eleitos_partido > 1) {
                 plural_eleito = "s";
             }
 
-            System.out.println(i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nomina"+ plural_vtsNomTot+ " e " + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido + " candidato"+plural_eleito+" eleito"+plural_eleito);
+            System.out.println(i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nomina"
+                    + plural_vtsNomTot + " e " + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido
+                    + " candidato" + plural_eleito + " eleito" + plural_eleito);
 
             i++;
         }
@@ -244,36 +246,8 @@ public class GeraRelatorios {
     public static void geraRelatorio7(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
         System.out.println("\nPrimeiro e último colocados de cada partido:");
-        List<Partido> order_p = new ArrayList<Partido>(partidos.values());
-        Comparator<Partido> comparator_p = (p1, p2) -> {
-            int res = 0;
-            res = p2.getVotosTotais() - p1.getVotosTotais();
-            if (res == 0) {
-                res = p1.getNr_partido() - p2.getNr_partido();
-            }
-            return res;
-        };
-        order_p.sort(comparator_p);
-        int i = 1;
-        Iterator<Partido> it_p = order_p.iterator();
-        while (it_p.hasNext() == true) {
-            Partido p = it_p.next();
-            List<Candidato> order_c = new ArrayList<Candidato>(p.getCandidatos().values());
-            Comparator<Candidato> comparator_c = (c1, c2) -> {
-                int res = 0;
-                res = c2.getQtd_votos() - c1.getQtd_votos();
-                if (res == 0) {
-                    res = c2.getIdade() - c1.getIdade();
-                }
-                return res;
-            };
-            order_c.sort(comparator_c);
-            Candidato c_melhor = order_c.get(0);
-            Candidato c_pior = order_c.get(p.getCandidatos().size() - 1);
-
-            System.out.println(i + " - " + p + " " + c_melhor.getNm_urna_candidato() + " (" + c_melhor.getNr_candidato() + ", " + c_melhor.getQtd_votos()
-                                + ")" +" / " + c_pior.getNm_urna_candidato() + " (" + c_pior.getNr_candidato() + ", " + c_pior.getQtd_votos() + ")");
-        }
+  
+        
 
     }
 
