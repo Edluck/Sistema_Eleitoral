@@ -223,7 +223,18 @@ public class GeraRelatorios {
                     qtd_eleitos_partido++;
                 }
             }
-            System.out.println(i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nominais e " + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido + " candidatos eleitos");
+
+            String plural_vtsNomTot = "l";
+            if (p.getVotosNominaisTotal()>1) {
+                plural_vtsNomTot = "is";
+            }
+            
+            String plural_eleito = "";
+            if (qtd_eleitos_partido > 1) {
+                plural_eleito = "s";
+            }
+
+            System.out.println(i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nomina"+ plural_vtsNomTot+ " e " + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido + " candidato"+plural_eleito+" eleito"+plural_eleito);
 
             i++;
         } 
