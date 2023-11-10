@@ -171,6 +171,7 @@ public class GeraRelatorios {
     public static void geraRelatorio7(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
 
+                
     }
 
     public static void geraRelatorio8(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
