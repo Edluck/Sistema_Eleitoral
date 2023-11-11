@@ -14,17 +14,9 @@ public class Acervo {
         try {
             CSVCandidatosReader.candidatosReader(tipo_deputado,arq_cand, data_eleicao, candidatos, partidos);
             CSVVotacaoReader.votacaoReader(tipo_deputado,arq_vot, candidatos, partidos);
-            //imprime_partidos();
         } catch (Exception e) {
             System.out.println("Erro ao ler arquivos");
             e.printStackTrace();
-        }
-    }
-
-    private void imprime_partidos() {
-        Partido p = partidos.get(70);
-        for(Candidato c : p.getCandidatos().values()) {
-            System.out.println(c);
         }
     }
 

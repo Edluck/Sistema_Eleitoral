@@ -40,8 +40,7 @@ public class CSVCandidatosReader {
                 }
 
                 if (nr_tipo_deputado == Integer.parseInt(dados[13]) && dados[67].contains("Válido")) {
-                       
-                    
+
                     Candidato c = new Candidato(Integer.parseInt(dados[13]), Integer.parseInt(dados[68]),
                             Integer.parseInt(dados[16]), dados[18], Integer.parseInt(dados[27]), dados[28],
                             Integer.parseInt(dados[30]), dados[42],

@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -268,6 +269,18 @@ public class GeraRelatorios {
 
         Comparator<Candidato> comparator_c = (c1, c2) -> {
             int res_c = 0;
+            
+
+            if(c1.getNm_tipo_destinacao_votos().contains("legenda") && c2.getNm_tipo_destinacao_votos().contains("legenda")) {
+                return 0;
+            }
+            else if(c1.getNm_tipo_destinacao_votos().contains("legenda")) {
+                return 1;
+            }
+            else if(c2.getNm_tipo_destinacao_votos().contains("legenda")) {
+                return -1;
+            }
+
             res_c = c2.getQtd_votos() - c1.getQtd_votos();
             if (res_c == 0) {
                 res_c = c2.getIdade() - c1.getIdade();
@@ -303,17 +316,19 @@ public class GeraRelatorios {
         List<Partido> order_p = new ArrayList<Partido>(partidos.values());
 
         order_p.sort(comparator_p);
+        
 
         int i = 1;
         Iterator<Partido> it_p = order_p.iterator();
         while (it_p.hasNext() == true) {
-
+            int ind_r = 1;
 
             Partido p = it_p.next();
-
             if (p.getCandidatos().size() == 0) {
                 continue;
             }
+
+            
 
             List<Candidato> order_c = new ArrayList<Candidato>(p.getCandidatos().values());
 
@@ -321,12 +336,15 @@ public class GeraRelatorios {
 
             Candidato c_melhor = order_c.get(0);
 
-            if (c_melhor.getQtd_votos() <= 0) {
+            if (c_melhor.getQtd_votos() < 0) {
                 continue;
             }
 
-            Candidato c_pior = order_c.get(p.getCandidatos().size() - 1);
-
+            Candidato c_pior = order_c.get(p.getCandidatos().size() - ind_r);
+            while(c_pior.getNm_tipo_destinacao_votos().contains("legenda")) {
+                ind_r++;
+                c_pior = order_c.get(p.getCandidatos().size() - ind_r);
+            }
             DecimalFormat format2 = new DecimalFormat("#,###");
             DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
             symbols2.setGroupingSeparator('.');
