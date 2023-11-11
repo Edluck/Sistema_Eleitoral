@@ -55,7 +55,7 @@ public class Partido {
     }
 
     public Map<Integer, Candidato> getCandidatos() {
-        return candidatos;
+        return new HashMap<Integer,Candidato>(candidatos);
     }
 
     @Override

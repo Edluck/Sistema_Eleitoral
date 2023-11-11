@@ -21,6 +21,13 @@ public class Acervo {
         }
     }
 
+    private void imprime_partidos() {
+        Partido p = partidos.get(70);
+        for(Candidato c : p.getCandidatos().values()) {
+            System.out.println(c);
+        }
+    }
+
     public void geraRelatorio(String tipo_deputado) {
         GeraRelatorios.geraRelatorioTodos(tipo_deputado, candidatos, partidos);
 

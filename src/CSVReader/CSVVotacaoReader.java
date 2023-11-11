@@ -9,7 +9,7 @@ import SistemaEleitoral.Candidato;
 import SistemaEleitoral.Partido;
 
 public class CSVVotacaoReader {
-    private static String diretorio_arq_vot = "src/CSVReader/";
+    private static String diretorio_arq_vot = "";
 
     public static void votacaoReader(String tipo_deputado, String arquivo_vot, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos)
@@ -37,16 +37,19 @@ public class CSVVotacaoReader {
 
                 if (nr_notavel < 95 || nr_notavel > 98) {
                     if (nr_tipo_deputado == Integer.parseInt(dados[17])) {
-                        if (candidatos.containsKey(nr_notavel)) {
+                        if (candidatos.get(nr_notavel) != null) {
                             if (candidatos.get(nr_notavel).getNm_tipo_destinacao_votos().contains("legenda")) {
                                 int nr_partido = candidatos.get(nr_notavel).getNr_partido();
                                 partidos.get(nr_partido).addVotosLegenda(qt_votos);
+
                             } else {
+
                                 if (candidatos.get(nr_notavel).getCd_situacao_candidato_tot() == 2 || candidatos.get(nr_notavel).getCd_situacao_candidato_tot() == 16 ) {
                                     candidatos.get(nr_notavel).addVotos(qt_votos);   
                                 }
                             }
-                        } else if (partidos.containsKey(nr_notavel)) {
+
+                        } else if (partidos.get(nr_notavel) != null) {
                             partidos.get(nr_notavel).addVotosLegenda(qt_votos);
                         }
                     }

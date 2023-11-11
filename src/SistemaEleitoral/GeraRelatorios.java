@@ -3,12 +3,9 @@ package SistemaEleitoral;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 public class GeraRelatorios {
@@ -48,14 +45,8 @@ public class GeraRelatorios {
 
     public static void geraRelatorio2(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
-        int nr_vagas = 0, i = 1;
-        for (Candidato c : candidatos.values()) {
-            if (c.getCd_cargo() == nr_tipo_cand
-                    && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
-                if (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)
-                    nr_vagas++;
-            }
-        }
+        int i = 1;
+  
         if (nr_tipo_cand == 6)
             System.out.println("Deputados federais eleitos: ");
         else if (nr_tipo_cand == 7)
@@ -74,7 +65,7 @@ public class GeraRelatorios {
         order.sort(comparator);
 
         Iterator<Candidato> it = order.iterator();
-        
+
         while (it.hasNext() == true) {
             Candidato c = it.next();
             String eh_fed = "";
@@ -167,7 +158,7 @@ public class GeraRelatorios {
             if (c.getCd_cargo() == nr_tipo_cand &&
                     (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
                 if (!(c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3))
-                    System.out.println(i + " - " + eh_fed+ c);
+                    System.out.println(i + " - " + eh_fed + c);
                 i++;
 
             }
@@ -209,7 +200,7 @@ public class GeraRelatorios {
             if (c.getCd_cargo() == nr_tipo_cand &&
                     (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16)) {
                 if ((c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3) && i > nr_vagas)
-                    System.out.println(i + " - " + eh_fed+c);
+                    System.out.println(i + " - " + eh_fed + c);
                 i++;
 
             }
@@ -251,8 +242,20 @@ public class GeraRelatorios {
                 plural_eleito = "s";
             }
 
-            System.out.println(i + " - " + p + " " + p.getVotosTotais() + " (" + p.getVotosNominaisTotal() + " nomina"
-                    + plural_vtsNomTot + " e " + p.getVotosLegenda() + " de legenda), " + qtd_eleitos_partido
+            String plural_voto = " voto";
+            if (p.getVotosTotais() > 1) {
+                plural_voto = " votos";
+            }
+            DecimalFormat format2 = new DecimalFormat("#,###");
+            DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
+            symbols2.setGroupingSeparator('.');
+            format2.setDecimalFormatSymbols(symbols2);
+
+            System.out.println(i + " - " + p + " " + format2.format(p.getVotosTotais()) + plural_voto + " ("
+                    + format2.format(p.getVotosNominaisTotal())
+                    + " nomina"
+                    + plural_vtsNomTot + " e " + format2.format(p.getVotosLegenda()) + " de legenda), "
+                    + qtd_eleitos_partido
                     + " candidato" + plural_eleito + " eleito" + plural_eleito);
 
             i++;
@@ -262,7 +265,7 @@ public class GeraRelatorios {
     public static void geraRelatorio7(int nr_tipo_cand, Map<Integer, Candidato> candidatos,
             Map<Integer, Partido> partidos) {
         System.out.println("\nPrimeiro e último colocados de cada partido:");
-  
+
         Comparator<Candidato> comparator_c = (c1, c2) -> {
             int res_c = 0;
             res_c = c2.getQtd_votos() - c1.getQtd_votos();
@@ -276,14 +279,12 @@ public class GeraRelatorios {
             int res_p = 0;
             if (p1.getCandidatos().size() == 0 && p2.getCandidatos().size() == 0) {
                 return 0;
-            }
-            else if (p1.getCandidatos().size() == 0) {
+            } else if (p1.getCandidatos().size() == 0) {
                 return 1;
-            }
-            else if (p2.getCandidatos().size() == 0) {
+            } else if (p2.getCandidatos().size() == 0) {
                 return -1;
             }
-            
+
             List<Candidato> lista_c1 = new ArrayList<Candidato>(p1.getCandidatos().values());
             List<Candidato> lista_c2 = new ArrayList<Candidato>(p2.getCandidatos().values());
 
@@ -291,7 +292,7 @@ public class GeraRelatorios {
             lista_c2.sort(comparator_c);
 
             res_p = lista_c2.get(0).getQtd_votos() - lista_c1.get(0).getQtd_votos();
-            
+
             if (res_p == 0) {
                 res_p = p1.getNr_partido() - p2.getNr_partido();
             }
@@ -300,45 +301,48 @@ public class GeraRelatorios {
         };
 
         List<Partido> order_p = new ArrayList<Partido>(partidos.values());
-        
+
         order_p.sort(comparator_p);
 
         int i = 1;
         Iterator<Partido> it_p = order_p.iterator();
         while (it_p.hasNext() == true) {
-            int redutor_idx = 1;
+
 
             Partido p = it_p.next();
-            
+
             if (p.getCandidatos().size() == 0) {
                 continue;
             }
-            
+
             List<Candidato> order_c = new ArrayList<Candidato>(p.getCandidatos().values());
 
             order_c.sort(comparator_c);
-            
+
             Candidato c_melhor = order_c.get(0);
-            
+
             if (c_melhor.getQtd_votos() <= 0) {
                 continue;
             }
 
-            Candidato c_pior = order_c.get(p.getCandidatos().size() - redutor_idx);
-            
-            while (c_pior.getQtd_votos() == 0) {
-                redutor_idx++;
-                c_pior = order_c.get(p.getCandidatos().size() - redutor_idx);
+            Candidato c_pior = order_c.get(p.getCandidatos().size() - 1);
+
+            DecimalFormat format2 = new DecimalFormat("#,###");
+            DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
+            symbols2.setGroupingSeparator('.');
+            format2.setDecimalFormatSymbols(symbols2);
+
+            String plural_voto = " voto";
+            if (c_pior.getQtd_votos() > 1) {
+                plural_voto = " votos";
             }
 
             System.out.println(i + " - " + p + " " + c_melhor.getNm_urna_candidato() + " (" + c_melhor.getNr_candidato()
-                    + ", " + c_melhor.getQtd_votos()
-                    + ")" + " / " + c_pior.getNm_urna_candidato() + " (" + c_pior.getNr_candidato() + ", "
-                    + c_pior.getQtd_votos() + ")");
+                    + ", " + format2.format(c_melhor.getQtd_votos()) + " votos"
+                    + ")" + " / " + c_pior.getNm_urna_candidato() + "" + " (" + c_pior.getNr_candidato() + ", "
+                    + format2.format(c_pior.getQtd_votos()) + plural_voto + ")");
             i++;
         }
-
-       
 
     }
 
@@ -354,7 +358,7 @@ public class GeraRelatorios {
         double porcentagem_40_50 = 0;
         double porcentagem_50_60 = 0;
         double porcentagem_maior_60 = 0;
-        System.out.println("\nEleitos, por faixa etária (na data de eleição):");
+        System.out.println("\nEleitos, por faixa etária (na data da eleição):");
         for (Candidato c : candidatos.values()) {
             if (c.getCd_cargo() == nr_tipo_cand && (c.getCd_sit_tot_turno() == 2 || c.getCd_sit_tot_turno() == 3)) {
                 if (c.getIdade() < 30)
@@ -412,7 +416,7 @@ public class GeraRelatorios {
                     qtd_feminino++;
             }
         }
-        DecimalFormat format = new DecimalFormat("#,###.00");
+        DecimalFormat format = new DecimalFormat("#,##0.00");
         DecimalFormat format2 = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
@@ -440,18 +444,14 @@ public class GeraRelatorios {
 
         for (Partido p : partidos.values()) {
             total_votos_legenda += p.getVotosLegenda();
-            for (Candidato c : p.getCandidatos().values()) {
-                if (c.getCd_cargo() == nr_tipo_cand
-                        && (c.getCd_situacao_candidato_tot() == 2 || c.getCd_situacao_candidato_tot() == 16))
-                    total_votos_nomimais += c.getQtd_votos();
-            }
+            total_votos_nomimais += p.getVotosNominaisTotal();
         }
 
         total_votos_validos = total_votos_legenda + total_votos_nomimais;
         percentual_votos_legenda = ((double) total_votos_legenda / total_votos_validos) * 100;
         percentual_votos_nomimais = ((double) total_votos_nomimais / total_votos_validos) * 100;
 
-        DecimalFormat format = new DecimalFormat("#,###.00");
+        DecimalFormat format = new DecimalFormat("#,##0.00");
         DecimalFormat format2 = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         DecimalFormatSymbols symbols2 = new DecimalFormatSymbols();
